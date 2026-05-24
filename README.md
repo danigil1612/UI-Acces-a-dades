@@ -1,0 +1,103 @@
+# TreballDani_app
+
+Back-office de Fórmula 1 amb SQLAlchemy ORM, Repository Pattern, Unit of Work, Alembic i una interfície de consola amb Rich.
+
+## Domini
+
+El projecte gestiona:
+
+- conductors;
+- cotxes;
+- patrocinadors;
+- pistes;
+- curses;
+- pneumàtics;
+- resultats de cursa;
+- ús de pneumàtics en cada resultat.
+
+## Relacions
+
+- **1:1**: `Conductor` - `Cotxe`.
+- **1:N**: `Pista` - `Cursa`.
+- **N:M**: `Conductor` - `Patrocinador`.
+- **N:M amb atributs**: `ResultatCursa` - `Pneumatic` mitjançant `ResultatPneumatic`, que guarda `periode`, `nombre_de_voltes` i `numero_us`.
+
+## Estructura
+
+```text
+src/
+├── domain/
+│   ├── config.py
+│   ├── db.py
+│   ├── models.py
+│   └── repositories.py
+└── ui/
+    └── main.py
+```
+
+`models.py` conté els models ORM. `repositories.py` conté els repositoris i la unitat de treball. `ui/main.py` conté els menús de consola.
+
+## Configuració de base de dades
+
+Copia l'exemple d'entorn:
+
+```bash
+cp .env.example .env
+```
+
+Per treballar en local es pot deixar:
+
+```env
+ENVIRONMENT=test
+DB_URL_TEST=sqlite:///./f1_test.db
+```
+
+Per desenvolupament i producció cal configurar PostgreSQL:
+
+```env
+DB_URL_DEVELOPMENT=postgresql+psycopg://USER:PASSWORD@HOST:PORT/DBNAME?sslmode=require
+DB_URL_PRODUCTION=postgresql+psycopg://USER:PASSWORD@HOST:PORT/DBNAME?sslmode=require
+```
+
+## Instal·lació
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install -e .
+```
+
+## Migracions
+
+```bash
+alembic upgrade head
+```
+
+Les migracions incloses són:
+
+1. `Initial schema creation`
+2. `Added last_update attribute`
+3. `Added sponsors relationship`
+
+## Executar la UI
+
+```bash
+python -m ui.main
+```
+
+Primer es pot usar l'opció **Carregar dades de demo**. Després es poden provar els menús de conductors, cotxes, patrocinadors, pistes, curses, pneumàtics i resultats.
+
+## Proves de la pràctica anterior
+
+```bash
+jupyter nbconvert --to notebook --execute notebooks/200_repositoris.ipynb --output notebooks/200_repositoris_executed.ipynb
+```
+
+## Hash de l'últim commit
+
+Després de fer el commit final:
+
+```bash
+git rev-parse HEAD
+```
+
+Aquest hash és el que s'ha de lliurar juntament amb el vídeo.

@@ -1,0 +1,23 @@
+[project]
+name = "treballdani-app"
+version = "0.1.0"
+description = "Capa de persistència d'una aplicació back-office de Fórmula 1"
+authors = [{ name = "Dani" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "SQLAlchemy>=2.0",
+    "alembic>=1.13",
+    "python-dotenv>=1.0",
+    "psycopg[binary]>=3.1",
+    "ipykernel>=6.0",
+    "notebook>=7.0",
+    "rich>=13.0",
+]
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
